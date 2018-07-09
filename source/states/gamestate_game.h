@@ -58,8 +58,10 @@ private:
 
     STATE_TYPE GetGameState( VOID ) { return mCurrentState; }
 
+    Strata::COLOR ModulateFocus( VOID );
     BOOL CheckForDeath( VOID );
     BOOL CheckIsPaused( VOID ) 
+    
     {
         return ( 
             mCurrentState == STATE_TYPE_PAUSE_START ||

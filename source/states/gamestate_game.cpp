@@ -19,6 +19,8 @@
 #include "../game/game.h"
 #include "gamestate_game.h"
 
+#define MENU_TEXT_YSTART    215.0f
+#define MENU_TEXT_YSPACE    25.0f
 
 GameState_Game::GameState_Game( Strata::Application* appContext ) :
     GameState(appContext)
@@ -68,7 +70,7 @@ VOID GameState_Game::OnEnter( VOID )
 
     // Intialize game objects
     mBlackSprite.Initialize( 0.0f, 0.0f, 640.0f, 360.0f, 10, Strata::ResourceManager::GetTextureHandle( "Fade" ));
-    mPausedSprite.Initialize( 320.0f, 180.0f, 261.0f, 68.0f, 12, Strata::ResourceManager::GetTextureHandle( "Paused" ));
+    mPausedSprite.Initialize( 255.0f, 151.0f, 130.0f, 34.0f, 12, Strata::ResourceManager::GetTextureHandle( "Paused" ));
 
     mBlackSprite.SetAlphaFactor( 255 );
 
@@ -129,7 +131,7 @@ VOID GameState_Game::HandleInput( VOID )
     mInputManager.Poll();
     if( mCurrentState == STATE_TYPE_WAVE_INPUT )
     {
-        if( mInputManager.IsKeyPressed( KEY_MINUS ) == TRUE )
+        if( mInputManager.IsKeyPressed( KEY_PLUS ) == TRUE )
         {
             Game * gameApp = (Game*)mpAppContext;
             if( gameApp) gameApp->GetAudioEngine().PlaySound("btn_press");
@@ -139,8 +141,59 @@ VOID GameState_Game::HandleInput( VOID )
     }
     else if( mCurrentState == STATE_TYPE_PAUSE_INPUT )
     {
-        // TODO:  Handle Pause Menu
+        if( mInputManager.IsKeyPressed( KEY_B ) == TRUE )
+        {
+            ((Game*)mpAppContext)->GetAudioEngine().PlaySound("btn_press");
+            mAnimationTimer = 0.0f;
+            mCurrentState = STATE_TYPE_PAUSE_RETURN;
+        }
+        else if( mInputManager.IsKeyPressed( KEY_DDOWN) == TRUE || mInputManager.IsKeyPressed( KEY_LSTICK_DOWN ) == TRUE )
+        {
+            ((Game*)mpAppContext)->GetAudioEngine().PlaySound("btn_select");
+
+            if( mFocusOption == 1 ) mFocusOption = 0;
+            else mFocusOption++;
+        }
+        else if( mInputManager.IsKeyPressed( KEY_DUP) == TRUE || mInputManager.IsKeyPressed( KEY_LSTICK_UP ) == TRUE )
+        {
+            ((Game*)mpAppContext)->GetAudioEngine().PlaySound("btn_select");
+
+            if( mFocusOption == 0) mFocusOption = 1;
+            else mFocusOption--;
+        }
+        else if( mInputManager.IsKeyPressed( KEY_A ) == TRUE )
+        {
+            if( mFocusOption == 0 )
+            {
+                mAnimationTimer = 0.0f;
+                ((Game*)mpAppContext)->GetAudioEngine().PlaySound("btn_press");
+                mCurrentState = STATE_TYPE_PAUSE_RETURN;
+            }
+            else if( mFocusOption == 1 )
+            {
+                Game * gameApp = (Game*)mpAppContext;
+                if( gameApp ) 
+                {
+                    gameApp->GetAudioEngine().PlaySound("btn_press");
+                    gameApp->GetStateManager().PopState();
+                }
+            }
+        }
     }
+}
+Strata::COLOR GameState_Game::ModulateFocus( VOID )
+{
+    Strata::COLOR focusColor;
+    float multiplier = 0.33f * cos( 7 * mModulateTimer ) + 0.66f;
+    if( multiplier > 1.0f ) multiplier = 1.0f;
+    if( multiplier < 0.0f ) multiplier = 0.0f;
+
+    focusColor.Components.a = 255;
+    focusColor.Components.r = (BYTE)(255.0f * multiplier);
+    focusColor.Components.g = (BYTE)(150.0f * multiplier);
+    focusColor.Components.b = (BYTE)(0.0f * multiplier);
+
+    return focusColor;
 }
 VOID GameState_Game::Update( FLOAT elapsedTime )
 {
@@ -245,7 +298,57 @@ VOID GameState_Game::Update( FLOAT elapsedTime )
             mCurrentState = STATE_TYPE_WAVE_INTRO;
         }
     }
-    // TODO:  HANDLE PAUSE MENU
+    else if( mCurrentState == STATE_TYPE_PAUSE_START )
+    {
+        paused = true;
+        mPlayer.SetCanShoot( false );
+        mPlayer.SetCanShield( false );
+        mPlayer.SetCanMove( false );
+
+        float normalizedAlpha = mAnimationTimer / 0.25f;
+        if( normalizedAlpha > 1.0f ) normalizedAlpha = 1.0f;
+
+        BYTE alphaValue = (BYTE)(normalizedAlpha * 200.0f );
+
+        // Set our sprite color
+        mBlackSprite.SetAlphaFactor( alphaValue );
+
+        if( alphaValue == 200 ) {
+            mAnimationTimer = 0.0f;
+            mCurrentState = STATE_TYPE_PAUSE_INPUT;
+        }
+    }
+    else if( mCurrentState == STATE_TYPE_PAUSE_INPUT )
+    {
+        paused = true;
+        mPlayer.SetCanShoot( false );
+        mPlayer.SetCanShield( false );
+        mPlayer.SetCanMove( false );
+    }
+    else if( mCurrentState == STATE_TYPE_PAUSE_RETURN )
+    {
+        paused = true;
+        mPlayer.SetCanShoot( false );
+        mPlayer.SetCanShield( false );
+        mPlayer.SetCanMove( false );
+
+        float normalizedAlpha = mAnimationTimer / 0.25f;
+        if( normalizedAlpha > 1.0f ) normalizedAlpha = 1.0f;
+
+        BYTE alphaValue = (BYTE)(200.0f - normalizedAlpha * 200.0f );
+
+        // Set our sprite color
+        mBlackSprite.SetAlphaFactor( alphaValue );
+
+        if( alphaValue == 0x00 ) {
+            mAnimationTimer = 0.0f;
+            paused = false;
+            mPlayer.SetCanShoot( true );
+            mPlayer.SetCanShield( true );
+            mPlayer.SetCanMove( true );            
+            mCurrentState = STATE_TYPE_WAVE_INPUT;
+        }
+    }    
     else if( mCurrentState == STATE_TYPE_GAME_FADEOUT )
     {
         mPlayer.SetCanMove( false );
@@ -346,7 +449,14 @@ VOID GameState_Game::Draw( VOID )
 
     if( mCurrentState == STATE_TYPE_PAUSE_INPUT )
     {
-        // Draw Pause Menu
+        mPausedSprite.Draw(mSpriteRenderer);
+
+        // Draw our menu items
+        mFont.SetScale( 0.25f );
+        if( mFocusOption == 0 ) mFont.SetColor( ModulateFocus() ); else mFont.SetColor( 255, 255, 255, 255 );
+        mFont.DrawText( mSpriteRenderer, 320.0f, MENU_TEXT_YSTART + MENU_TEXT_YSPACE * 0, SPRITEFONT_ALIGN_CENTER, 12, "Continue" );
+        if( mFocusOption == 1 ) mFont.SetColor( ModulateFocus() ); else mFont.SetColor( 255, 255, 255, 255 );
+        mFont.DrawText( mSpriteRenderer, 320.0f, MENU_TEXT_YSTART + MENU_TEXT_YSPACE * 1, SPRITEFONT_ALIGN_CENTER, 12, "Quit" );
     }
 
     // Draw the player

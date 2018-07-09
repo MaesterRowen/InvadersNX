@@ -106,7 +106,7 @@ DWORD Game::Update( FLOAT elapsedTime )
     mInputManager.Poll();
 
     // If the + button is pressed, then exit
-    if( mInputManager.IsKeyPressed( KEY_PLUS )) {
+    if( mInputManager.IsKeyPressed( KEY_MINUS )) {
         mRunning = false;
         return 0UL;
     }

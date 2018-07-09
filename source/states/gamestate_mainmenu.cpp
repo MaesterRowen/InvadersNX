@@ -19,8 +19,8 @@
 
 #include "../game/game.h"
 
-#define MENU_FADEIN_TIME    5.00f
-#define MENU_FADEOUT_TIME   5.00f
+#define MENU_FADEIN_TIME    1.00f
+#define MENU_FADEOUT_TIME   1.00f
 #define MENU_TEXT_YSTART    215.0f
 #define MENU_TEXT_YSPACE    25.0f
 
