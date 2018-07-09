@@ -31,6 +31,7 @@ BOOL Game::Initialize( VOID )
     Strata::ResourceManager::AddTexture( "MenuBkg", 640.0f, 360.0f, "assets/textures/menubkg.png" );
     Strata::ResourceManager::AddTexture( "HSPanel", 922.0f, 489.0f, "assets/textures/hspanel.png" );
     Strata::ResourceManager::AddTexture( "HSCaption", 402.0f, 33.0f, "assets/textures/highscores.png" );
+    Strata::ResourceManager::AddTexture( "Controls", 560.0f, 370.0f, "assets/textures/controls.png" );
 	Strata::ResourceManager::AddTexture( "Paused", 261.0f, 68.0f, "assets/textures/paused.png" );
     Strata::ResourceManager::AddTexture( "Smoke", 128.0f, 128.0f, "assets/textures/particle.png" );
     Strata::ResourceManager::AddTexture( "BarBkg", 160.0f, 16.0f, "assets/textures/barbkg.png" );

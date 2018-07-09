@@ -63,6 +63,7 @@ VOID GameState_MainMenu::OnEnter( VOID )
     mBkgSprite.Initialize( 0.0f, 0.0f, 640.0f, 360.0f, 0, Strata::ResourceManager::GetTextureHandle("MenuBkg" ));
     mPanelSprite.Initialize( 80.0f, 65.0f, 480.0f, 260.0f, 2, Strata::ResourceManager::GetTextureHandle( "HSPanel" ));
     mCaptionSprite.Initialize( 120.0f, 30.0f, 400.0f, 33.0f, 1, Strata::ResourceManager::GetTextureHandle( "HSCaption" ));
+    mControlsSprite.Initialize( 40.0f, -10.0f, 560.0f, 370.0f, 2, Strata::ResourceManager::GetTextureHandle( "Controls" ));
 
     // Initialize Alpha Factor
     mBlackSprite.SetAlphaFactor(255);
@@ -168,6 +169,17 @@ VOID GameState_MainMenu::HandleInput( VOID )
             ((Game*)mpAppContext)->GetAudioEngine().PlaySound("btn_press");
         }
     }
+    else if( mCurrentMenu == MENU_TYPE_CONTROLS )
+    {
+        if( gameApp->GetInputManager().IsKeyPressed( KEY_A ) == TRUE || gameApp->GetInputManager().IsKeyPressed( KEY_B ) == TRUE )
+        {
+            mFocusOption = 0xFFFFFFFF;
+            mTargetMenu = MENU_TYPE_MAIN;
+            mCurrentState = STATE_TYPE_FADEOUT;
+            mAnimationTimer = 0.0f;
+            ((Game*)mpAppContext)->GetAudioEngine().PlaySound("btn_press");
+        }
+    }    
 }
 VOID GameState_MainMenu::Update(FLOAT elapsedTime )
 {
@@ -314,9 +326,16 @@ VOID GameState_MainMenu::Draw( VOID )
             mFont.DrawText( mSpriteRenderer, 430.0f, 100.0f + x * 22.0f, SPRITEFONT_ALIGN_LEFT, 5, "W%d", gameApp->mScoreEntries[x].Wave );
         }
 
-        // if( mFocusOption == 0 ) mFont.SetColor( ModulateFocus() ); else mFont.SetColor( 255, 255, 255, 255 );
-        // mFont.DrawText( mSpriteRenderer, 320.0f, 340.0f, SPRITEFONT_ALIGN_CENTER, 5, "Back To Main Menu" );
+        if( mFocusOption == 0 ) mFont.SetColor( ModulateFocus() ); else mFont.SetColor( 255, 255, 255, 255 );
+        mFont.DrawText( mSpriteRenderer, 320.0f, 340.0f, SPRITEFONT_ALIGN_CENTER, 5, "Back To Main Menu" );
     }
+    else if( mCurrentMenu == MENU_TYPE_CONTROLS )
+    {
+        mControlsSprite.Draw( mSpriteRenderer );
+        mFont.SetScale( 0.25f );
+        if( mFocusOption == 0 ) mFont.SetColor( ModulateFocus() ); else mFont.SetColor( 255, 255, 255, 255 );
+        mFont.DrawText( mSpriteRenderer, 320.0f, 340.0f, SPRITEFONT_ALIGN_CENTER, 5, "Back To Main Menu" );
+    }    
 
     // Finalize our rendering
     mSpriteRenderer.EndDraw();
