@@ -87,6 +87,7 @@ VOID GameState_Game::OnEnter( VOID )
 
     // Enemy Swam Initialization
     mSwarm.Initialize( 320.0f, 0.0f, mCurrentWave, mAtlasTexture );
+    mSwarm.HookScoreCallback( GameState_Game::UpdateScoreHook, this );
 
     // UI Initalization
     mHealthBar.Initialize(      16.0f,               344.0f,               80.0f, 8.0f, 8, Strata::ResourceManager::GetTextureHandle( "BarBkg" ));

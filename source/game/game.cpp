@@ -64,7 +64,7 @@ BOOL Game::Initialize( VOID )
     mDirector.Add("GameOver", new GameState_GameOver(this));
     
     // Move to our first state
-    mDirector.PushState("MainMenu");
+    mDirector.PushState("Intro");
 
     // Initialize Inputmnager
     mInputManager.Initialize( CONTROLLER_P1_AUTO );

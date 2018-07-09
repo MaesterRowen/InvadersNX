@@ -120,7 +120,7 @@ VOID Player::Update( Strata::ParticleBatch * pParticles, std::vector<Projectile>
                 bullets.push_back( bullet );
 
                 // Decrement our number of rockets
-                //mRocketsRemaining--;
+                mRocketsRemaining--;
             }
         }
 

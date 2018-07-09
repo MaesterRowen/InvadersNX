@@ -65,9 +65,21 @@ public:
     BOOL IsStartReady( VOID ) { return mStartReady; }
     BOOL IsCleared( VOID ) { return mIsCleared; }
 
+    VOID HookScoreCallback( std::function<VOID(DWORD, VOID*)> cb, VOID * context )
+    {
+        Score.Callback = cb;
+        Score.Context = context;
+    }
+
 private:
 
     VOID LoadLayout( DWORD levelIndex, Strata::HTEXTURE hTexture );
+
+    // Score handling
+    struct {
+        std::function<VOID(DWORD, VOID*)> Callback;
+        VOID * Context;
+    } Score;
 
     SDL_Rect mBounds;
     RECT mSwarmRect;

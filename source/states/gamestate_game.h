@@ -57,6 +57,17 @@ private:
     };
 
     STATE_TYPE GetGameState( VOID ) { return mCurrentState; }
+    static VOID UpdateScoreHook( DWORD points, VOID * context )
+    {
+        if( context != nullptr )
+        {
+            ((GameState_Game*)context)->UpdateScore(points);
+        }
+    }
+    VOID UpdateScore( DWORD points )
+    {
+        mCurrentScore += points;
+    }
 
     Strata::COLOR ModulateFocus( VOID );
     BOOL CheckForDeath( VOID );

@@ -343,7 +343,10 @@ VOID EnemyController::CheckCollision( Strata::AudioEngine* audioEngine, std::vec
                 if( enemy.ApplyDamage( bullet.GetDamage() ) == TRUE )
                 {
                     mDeadEnemyIds.insert( mActiveEnemies[j].GetEnemyID());
-                    //DWORD score = mActiveEnemies[j].GetEnemyValue();
+                   
+
+                    // Update the game state score
+                    Score.Callback(mActiveEnemies[j].GetEnemyValue(), Score.Context );
 
                     mActiveEnemies[j] = mActiveEnemies.back();
                     mActiveEnemies.pop_back();
