@@ -15,7 +15,6 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-#include <iostream>
 #include "gamedirector.h"
 
 namespace Strata
@@ -28,8 +27,6 @@ namespace Strata
 
     GameDirector::~GameDirector( VOID )
     {
-        std::cout << "GameDirector Destroyed" << std::endl;
-
         // Free all of our game states
         for( auto it = mStates.begin(); it != mStates.end(); ++it )
         {

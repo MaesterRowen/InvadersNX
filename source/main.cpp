@@ -19,7 +19,7 @@
 #include <iostream>
 #include "game/game.h"
 
-#define USE_NXLINK  1           // Define to enable use of nxlink
+//#define USE_NXLINK  1           // Define to enable use of nxlink
 
 int main(int argc, char** argv) 
 {

@@ -49,6 +49,10 @@ public:
 	SCORE_ENTRY mScoreEntries[SCORE_ENTRY_MAX];
 	DWORD mScoreEntryCount;
 
+    VOID QuitApplication( VOID ) {
+        mRunning = FALSE;
+    }
+
     Strata::AudioEngine& GetAudioEngine() { return mAudioEngine; }
     Strata::InputManager& GetInputManager() { return mInputManager; }
     Strata::GameDirector& GetStateManager() { return mDirector; }

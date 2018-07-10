@@ -29,8 +29,8 @@ BOOL Game::Initialize( VOID )
     Strata::ResourceManager::AddTexture( "Logo", 400.0f, 200.0f, "romfs:/textures/logo.png" );
     Strata::ResourceManager::AddTexture( "Fade", 64.0f, 64.0f, "romfs:/textures/black.png" );
     Strata::ResourceManager::AddTexture( "MenuBkg", 640.0f, 360.0f, "romfs:/textures/menubkg.png" );
-    Strata::ResourceManager::AddTexture( "HSPanel", 922.0f, 489.0f, "romfs:/textures/hspanel.png" );
-    Strata::ResourceManager::AddTexture( "HSCaption", 402.0f, 33.0f, "romfs:/textures/highscores.png" );
+    //Strata::ResourceManager::AddTexture( "HSPanel", 922.0f, 489.0f, "romfs:/textures/hspanel.png" );
+    //Strata::ResourceManager::AddTexture( "HSCaption", 402.0f, 33.0f, "romfs:/textures/highscores.png" );
     Strata::ResourceManager::AddTexture( "Controls", 560.0f, 370.0f, "romfs:/textures/controls.png" );
 	Strata::ResourceManager::AddTexture( "Paused", 261.0f, 68.0f, "romfs:/textures/paused.png" );
     Strata::ResourceManager::AddTexture( "Smoke", 128.0f, 128.0f, "romfs:/textures/particle.png" );
@@ -78,7 +78,6 @@ BOOL Game::Initialize( VOID )
 
 Game::~Game( VOID )
 {
-    std::cout << "Game Instance Destroyed" << std::endl;
 }
 
 VOID Game::ParseHighScoreData( VOID )

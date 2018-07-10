@@ -111,7 +111,7 @@ VOID GameState_Game::OnEnter( VOID )
 
     mParticleEngine.AddParticles(mpSmokeParticles);
 
-    std::cout << "GameState_Game::OnEnter" << std::endl;
+    //std::cout << "GameState_Game::OnEnter" << std::endl;
 }
 
 BOOL GameState_Game::CheckForDeath( VOID )

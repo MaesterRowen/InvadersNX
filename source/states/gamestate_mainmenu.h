@@ -37,7 +37,7 @@ public:
         // Types of menu
         MENU_TYPE_NONE,
         MENU_TYPE_MAIN,
-        MENU_TYPE_HIGHSCORE,
+        //MENU_TYPE_HIGHSCORE,
         MENU_TYPE_CONTROLS,
         MENU_TYPE_GAME
     };

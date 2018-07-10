@@ -146,7 +146,9 @@ VOID EnemyController::LoadLayout( DWORD levelIndex, Strata::HTEXTURE hTexture )
     if( levelIndex > mLevelList.size() ) levelIndex = mLevelList.size() - 1;
     LEVEL_DATA& data = mLevelList[levelIndex];
 
-    std::cout << "Loading Level Layout:  " << levelIndex << std::endl;
+    #ifdef NXDEBUG
+      std::cout << "Loading Level Layout:  " << levelIndex << std::endl;
+    #endif
 
     mMinimumRateOfFire /= 1.25f;
     mShootChance += 100;  
@@ -173,7 +175,10 @@ VOID EnemyController::LoadLayout( DWORD levelIndex, Strata::HTEXTURE hTexture )
     {
         // Retrieve the current row informaiton
         const std::string& row = data.RowData[curRow];
-        std::cout << "Row " << curRow + 1 << ": " << row << std::endl;
+
+        #ifdef NXDEBUG
+          std::cout << "Row " << curRow + 1 << ": " << row << std::endl;
+        #endif
 
         // Loop through each string and build our enemy swarm
         DWORD curCol = 0UL;

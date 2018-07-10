@@ -24,12 +24,6 @@
 #define MENU_TEXT_YSTART    215.0f
 #define MENU_TEXT_YSPACE    25.0f
 
-float val1 = 0.0f, val2 = 0.0f;
-bool joyUpPressed = false, joyDownPressed = false;
-
-bool UpPressed = false;
-bool DownPressed = false;
-
 GameState_MainMenu::GameState_MainMenu( Strata::Application* appContext ) :
     GameState(appContext)
 {
@@ -61,8 +55,8 @@ VOID GameState_MainMenu::OnEnter( VOID )
     mBlackSprite.Initialize( 0.0f, 0.0f, 640.0f, 360.0f, 10, Strata::ResourceManager::GetTextureHandle( "Fade" ));
     mLogoSprite.Initialize( 120.0f, 0.0f, 400.0f, 200.0f, 1, Strata::ResourceManager::GetTextureHandle("Logo" ));
     mBkgSprite.Initialize( 0.0f, 0.0f, 640.0f, 360.0f, 0, Strata::ResourceManager::GetTextureHandle("MenuBkg" ));
-    mPanelSprite.Initialize( 80.0f, 65.0f, 480.0f, 260.0f, 2, Strata::ResourceManager::GetTextureHandle( "HSPanel" ));
-    mCaptionSprite.Initialize( 120.0f, 30.0f, 400.0f, 33.0f, 1, Strata::ResourceManager::GetTextureHandle( "HSCaption" ));
+    //mPanelSprite.Initialize( 80.0f, 65.0f, 480.0f, 260.0f, 2, Strata::ResourceManager::GetTextureHandle( "HSPanel" ));
+    //mCaptionSprite.Initialize( 120.0f, 30.0f, 400.0f, 33.0f, 1, Strata::ResourceManager::GetTextureHandle( "HSCaption" ));
     mControlsSprite.Initialize( 40.0f, -10.0f, 560.0f, 370.0f, 2, Strata::ResourceManager::GetTextureHandle( "Controls" ));
 
     // Initialize Alpha Factor
@@ -104,7 +98,7 @@ VOID GameState_MainMenu::HandleInput( VOID )
         if( gameApp->GetInputManager().IsKeyPressed( KEY_LSTICK_UP ) == TRUE || gameApp->GetInputManager().IsKeyPressed( KEY_DUP ) == TRUE)
         {
             if( mFocusOption == 0 ) 
-                mFocusOption = 3;
+                mFocusOption = 2;
             else mFocusOption--;
             mModulateTimer = 0.0f;
 
@@ -112,7 +106,7 @@ VOID GameState_MainMenu::HandleInput( VOID )
         }
         else if( gameApp->GetInputManager().IsKeyPressed( KEY_LSTICK_DOWN ) == TRUE || gameApp->GetInputManager().IsKeyPressed( KEY_DDOWN ) == TRUE )
         {
-            if( mFocusOption == 3 ) 
+            if( mFocusOption == 2 ) 
                 mFocusOption = 0;
             else mFocusOption++;
             mModulateTimer = 0.0f;
@@ -131,17 +125,17 @@ VOID GameState_MainMenu::HandleInput( VOID )
                 mCurrentState = STATE_TYPE_FADEOUT;
                 ((Game*)mpAppContext)->GetAudioEngine().PlaySound("btn_press");
             }
+            // else if( mFocusOption == 1 )
+            // {
+            //     mModulateTimer = 0.0f;
+            //     mAnimationTimer = 0.0f;
+            //     mLastMainFocus = mFocusOption;
+            //     mFocusOption = 0xFFFFFFFF;
+            //     mTargetMenu = MENU_TYPE_HIGHSCORE;
+            //     mCurrentState = STATE_TYPE_FADEOUT;
+            //     ((Game*)mpAppContext)->GetAudioEngine().PlaySound("btn_press");
+            // }            
             else if( mFocusOption == 1 )
-            {
-                mModulateTimer = 0.0f;
-                mAnimationTimer = 0.0f;
-                mLastMainFocus = mFocusOption;
-                mFocusOption = 0xFFFFFFFF;
-                mTargetMenu = MENU_TYPE_HIGHSCORE;
-                mCurrentState = STATE_TYPE_FADEOUT;
-                ((Game*)mpAppContext)->GetAudioEngine().PlaySound("btn_press");
-            }            
-            else if( mFocusOption == 2 )
             {
                 mModulateTimer = 0.0f;
                 mAnimationTimer = 0.0f;
@@ -151,24 +145,24 @@ VOID GameState_MainMenu::HandleInput( VOID )
                 mCurrentState = STATE_TYPE_FADEOUT;
                 ((Game*)mpAppContext)->GetAudioEngine().PlaySound("btn_press");
             }     
-            else if( mFocusOption == 3 )
+            else if( mFocusOption == 2 )
             {
                 // Quit
-                //appletExit();
+                ((Game*)mpAppContext)->QuitApplication();
             }                           
         }
     }
-    else if( mCurrentMenu == MENU_TYPE_HIGHSCORE )
-    {
-        if( gameApp->GetInputManager().IsKeyPressed( KEY_A ) == TRUE || gameApp->GetInputManager().IsKeyPressed( KEY_B ) == TRUE )
-        {
-            mFocusOption = 0xFFFFFFFF;
-            mTargetMenu = MENU_TYPE_MAIN;
-            mCurrentState = STATE_TYPE_FADEOUT;
-            mAnimationTimer = 0.0f;
-            ((Game*)mpAppContext)->GetAudioEngine().PlaySound("btn_press");
-        }
-    }
+    // else if( mCurrentMenu == MENU_TYPE_HIGHSCORE )
+    // {
+    //     if( gameApp->GetInputManager().IsKeyPressed( KEY_A ) == TRUE || gameApp->GetInputManager().IsKeyPressed( KEY_B ) == TRUE )
+    //     {
+    //         mFocusOption = 0xFFFFFFFF;
+    //         mTargetMenu = MENU_TYPE_MAIN;
+    //         mCurrentState = STATE_TYPE_FADEOUT;
+    //         mAnimationTimer = 0.0f;
+    //         ((Game*)mpAppContext)->GetAudioEngine().PlaySound("btn_press");
+    //     }
+    // }
     else if( mCurrentMenu == MENU_TYPE_CONTROLS )
     {
         if( gameApp->GetInputManager().IsKeyPressed( KEY_A ) == TRUE || gameApp->GetInputManager().IsKeyPressed( KEY_B ) == TRUE )
@@ -228,12 +222,12 @@ VOID GameState_MainMenu::Update(FLOAT elapsedTime )
             mCurrentMenu = mTargetMenu;
             mCurrentState = STATE_TYPE_FADEIN;
         }
-        else if( mTargetMenu == MENU_TYPE_HIGHSCORE )
-        {
-            mFadeInTime = MENU_FADEIN_TIME;
-            mCurrentMenu = mTargetMenu;
-            mCurrentState = STATE_TYPE_FADEIN;
-        }
+        // else if( mTargetMenu == MENU_TYPE_HIGHSCORE )
+        // {
+        //     mFadeInTime = MENU_FADEIN_TIME;
+        //     mCurrentMenu = mTargetMenu;
+        //     mCurrentState = STATE_TYPE_FADEIN;
+        // }
         else if( mTargetMenu == MENU_TYPE_CONTROLS )
         {
             mFadeInTime = MENU_FADEIN_TIME;
@@ -258,12 +252,12 @@ VOID GameState_MainMenu::Update(FLOAT elapsedTime )
             mCurrentState = STATE_TYPE_INPUT;
 
         }
-        else if( mCurrentMenu == MENU_TYPE_HIGHSCORE )
-        {
-            mModulateTimer = 0.0f;
-            mFocusOption = 0;
-            mCurrentState = STATE_TYPE_INPUT;
-        }
+        // else if( mCurrentMenu == MENU_TYPE_HIGHSCORE )
+        // {
+        //     mModulateTimer = 0.0f;
+        //     mFocusOption = 0;
+        //     mCurrentState = STATE_TYPE_INPUT;
+        // }
         else if( mCurrentMenu == MENU_TYPE_CONTROLS)
         {
             mModulateTimer = 0.0f;
@@ -303,32 +297,32 @@ VOID GameState_MainMenu::Draw( VOID )
         mFont.SetScale( 0.25f );
         if( mFocusOption == 0 ) mFont.SetColor( ModulateFocus() ); else mFont.SetColor( 255, 255, 255, 255 );
         mFont.DrawText( mSpriteRenderer, 320.0f, MENU_TEXT_YSTART + MENU_TEXT_YSPACE * 0, SPRITEFONT_ALIGN_CENTER, 5, "Play" );
+        //if( mFocusOption == 1 ) mFont.SetColor( ModulateFocus() ); else mFont.SetColor( 255, 255, 255, 255 );
+        //mFont.DrawText( mSpriteRenderer, 320.0f, MENU_TEXT_YSTART + MENU_TEXT_YSPACE * mFocusOption, SPRITEFONT_ALIGN_CENTER, 5, "Scores" );
         if( mFocusOption == 1 ) mFont.SetColor( ModulateFocus() ); else mFont.SetColor( 255, 255, 255, 255 );
-        mFont.DrawText( mSpriteRenderer, 320.0f, MENU_TEXT_YSTART + MENU_TEXT_YSPACE * 1, SPRITEFONT_ALIGN_CENTER, 5, "Scores" );
+        mFont.DrawText( mSpriteRenderer, 320.0f, MENU_TEXT_YSTART + MENU_TEXT_YSPACE * 1, SPRITEFONT_ALIGN_CENTER, 5, "Controls" );
         if( mFocusOption == 2 ) mFont.SetColor( ModulateFocus() ); else mFont.SetColor( 255, 255, 255, 255 );
-        mFont.DrawText( mSpriteRenderer, 320.0f, MENU_TEXT_YSTART + MENU_TEXT_YSPACE * 2, SPRITEFONT_ALIGN_CENTER, 5, "Controls" );
-        if( mFocusOption == 3 ) mFont.SetColor( ModulateFocus() ); else mFont.SetColor( 255, 255, 255, 255 );
-        mFont.DrawText( mSpriteRenderer, 320.0f, MENU_TEXT_YSTART + MENU_TEXT_YSPACE * 3, SPRITEFONT_ALIGN_CENTER, 5, "Quit" );                        
+        mFont.DrawText( mSpriteRenderer, 320.0f, MENU_TEXT_YSTART + MENU_TEXT_YSPACE * 2, SPRITEFONT_ALIGN_CENTER, 5, "Quit" );                        
     }
-    else if( mCurrentMenu == MENU_TYPE_HIGHSCORE )
-    {
-        mPanelSprite.Draw( mSpriteRenderer );
-        mCaptionSprite.Draw( mSpriteRenderer );
-        mFont.SetColor( 255, 255, 255, 255 );
-        mFont.SetScale( 0.25f );
+    // else if( mCurrentMenu == MENU_TYPE_HIGHSCORE )
+    // {
+    //     mPanelSprite.Draw( mSpriteRenderer );
+    //     mCaptionSprite.Draw( mSpriteRenderer );
+    //     mFont.SetColor( 255, 255, 255, 255 );
+    //     mFont.SetScale( 0.25f );
 
-        Game * gameApp = ((Game*)mpAppContext);
-        for( DWORD x = 0; x < gameApp->mScoreEntryCount; x++ )
-        {
-            mFont.DrawText( mSpriteRenderer, 190.0f, 100.0f + x * 22.0f, SPRITEFONT_ALIGN_RIGHT, 5, "%d.", x + 1 );
-            mFont.DrawText( mSpriteRenderer, 222.0f, 100.0f + x * 22.0f, SPRITEFONT_ALIGN_LEFT, 5, "%s", gameApp->mScoreEntries[x].Name );
-            mFont.DrawText( mSpriteRenderer, 410.0f, 100.0f + x * 22.0f, SPRITEFONT_ALIGN_RIGHT, 5, "%d", gameApp->mScoreEntries[x].Score );
-            mFont.DrawText( mSpriteRenderer, 430.0f, 100.0f + x * 22.0f, SPRITEFONT_ALIGN_LEFT, 5, "W%d", gameApp->mScoreEntries[x].Wave );
-        }
+    //     Game * gameApp = ((Game*)mpAppContext);
+    //     for( DWORD x = 0; x < gameApp->mScoreEntryCount; x++ )
+    //     {
+    //         mFont.DrawText( mSpriteRenderer, 190.0f, 100.0f + x * 22.0f, SPRITEFONT_ALIGN_RIGHT, 5, "%d.", x + 1 );
+    //         mFont.DrawText( mSpriteRenderer, 222.0f, 100.0f + x * 22.0f, SPRITEFONT_ALIGN_LEFT, 5, "%s", gameApp->mScoreEntries[x].Name );
+    //         mFont.DrawText( mSpriteRenderer, 410.0f, 100.0f + x * 22.0f, SPRITEFONT_ALIGN_RIGHT, 5, "%d", gameApp->mScoreEntries[x].Score );
+    //         mFont.DrawText( mSpriteRenderer, 430.0f, 100.0f + x * 22.0f, SPRITEFONT_ALIGN_LEFT, 5, "W%d", gameApp->mScoreEntries[x].Wave );
+    //     }
 
-        if( mFocusOption == 0 ) mFont.SetColor( ModulateFocus() ); else mFont.SetColor( 255, 255, 255, 255 );
-        mFont.DrawText( mSpriteRenderer, 320.0f, 340.0f, SPRITEFONT_ALIGN_CENTER, 5, "Back To Main Menu" );
-    }
+    //     if( mFocusOption == 0 ) mFont.SetColor( ModulateFocus() ); else mFont.SetColor( 255, 255, 255, 255 );
+    //     mFont.DrawText( mSpriteRenderer, 320.0f, 340.0f, SPRITEFONT_ALIGN_CENTER, 5, "Back To Main Menu" );
+    // }
     else if( mCurrentMenu == MENU_TYPE_CONTROLS )
     {
         mControlsSprite.Draw( mSpriteRenderer );

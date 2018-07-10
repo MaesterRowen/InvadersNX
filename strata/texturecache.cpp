@@ -55,8 +55,6 @@ namespace Strata
             Texture * item = it->second;
             if( item == nullptr ) continue;
 
-            std::cout << "Release Texture:  '" << item->GetTextureName() << "'" << std::endl;
-
             // Release this texture
             item->Release();
 
@@ -120,8 +118,8 @@ namespace Strata
                             HTEXTURE fullTex = (hTexture & 0xFFFF0000) | hRegion;
                             std::string regionName = textureName + "." + parts[0];
                             mHandleMap.insert( std::make_pair( regionName, fullTex ));
-                            std::cout << regionName << " : " << fullTex << std::endl;
-                            std::cout << "[" << atoi( parts[1].c_str()) << ", " << atoi( parts[2].c_str()) << ", " << atoi( parts[3].c_str()) << ", " << atoi( parts[4].c_str()) << "]" << std::endl;
+                            //std::cout << regionName << " : " << fullTex << std::endl;
+                            //std::cout << "[" << atoi( parts[1].c_str()) << ", " << atoi( parts[2].c_str()) << ", " << atoi( parts[3].c_str()) << ", " << atoi( parts[4].c_str()) << "]" << std::endl;
                         }
                     }
                 }

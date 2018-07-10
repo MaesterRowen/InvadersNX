@@ -27,7 +27,7 @@
 
 #define SDL_AUDIO_ALLOW_CHANGES     SDL_AUDIO_ALLOW_ANY_CHANGE
 
-#define AUDIO_DEBUG                 1
+//#define AUDIO_DEBUG                 1
 
 namespace Strata 
 {

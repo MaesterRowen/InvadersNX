@@ -57,7 +57,7 @@ VOID GameState_Intro::OnEnter( VOID )
     //Game * gameApp = (Game*)mpAppContext;
     //if( gameApp ) gameApp->GetAudioEngine().PlayMusic("music");
 
-    std::cout << "GameState_Intro::OnEnter" << std::endl;
+    //std::cout << "GameState_Intro::OnEnter" << std::endl;
 }
 VOID GameState_Intro::OnExit( VOID )
 {
