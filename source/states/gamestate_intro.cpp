@@ -54,8 +54,8 @@ VOID GameState_Intro::OnEnter( VOID )
     mLogoSprite.SetAlphaFactor( 0 );
 
     // Set the audio
-    Game * gameApp = (Game*)mpAppContext;
-    if( gameApp ) gameApp->GetAudioEngine().PlayMusic("music");
+    //Game * gameApp = (Game*)mpAppContext;
+    //if( gameApp ) gameApp->GetAudioEngine().PlayMusic("music");
 
     std::cout << "GameState_Intro::OnEnter" << std::endl;
 }

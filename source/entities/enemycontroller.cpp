@@ -72,7 +72,7 @@ EnemyController::EnemyController( VOID )
     mCurrentStep = 0UL;
 
     // Cache our level data
-    std::string levelFile = "assets/data/levels.dat";
+    std::string levelFile = "romfs:/data/levels.dat";
     std::ifstream stream(levelFile);
     if( stream.is_open())
     {
@@ -281,7 +281,7 @@ bool EnemyController::CalculateAttack( Enemy& enemyObject, FLOAT elapsedTime )
 			if( mDeadEnemyIds.find( enemyId ) != mDeadEnemyIds.end() )
 			{
 				canAttack = true;
-			} 
+			}  
 			else 
 			{
 				canAttack = false;

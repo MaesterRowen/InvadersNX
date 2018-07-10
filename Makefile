@@ -47,7 +47,7 @@ DATA		:=	data
 INCLUDES	:=	include strata
 EXEFS_SRC	:=	exefs_src
 
-#ROMFS	:=	romfs
+ROMFS		:=	assets
 
 #---------------------------------------------------------------------------------
 # options for code generation

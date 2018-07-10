@@ -29,11 +29,17 @@ int main(int argc, char** argv)
         std::cout << "nxlink initialized." << std::endl;
     #endif
 
+    // Initialize romfs
+    romfsInit();
+
     // Create an instance of our game class and run
     {
         Game gameInstance;
         gameInstance.Run();
     }
+
+    // Cleanup romfs
+    romfsExit();
 
     // Clean up nxlink, if enabled
     #ifdef USE_NXLINK

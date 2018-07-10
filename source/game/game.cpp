@@ -25,35 +25,35 @@
 
 BOOL Game::Initialize( VOID )
 {
-    Strata::ResourceManager::AddTexture( "DevLogo", 512.0f, 96.0f, "assets/textures/splash.png", "" );
-    Strata::ResourceManager::AddTexture( "Logo", 400.0f, 200.0f, "assets/textures/logo.png" );
-    Strata::ResourceManager::AddTexture( "Fade", 64.0f, 64.0f, "assets/textures/black.png" );
-    Strata::ResourceManager::AddTexture( "MenuBkg", 640.0f, 360.0f, "assets/textures/menubkg.png" );
-    Strata::ResourceManager::AddTexture( "HSPanel", 922.0f, 489.0f, "assets/textures/hspanel.png" );
-    Strata::ResourceManager::AddTexture( "HSCaption", 402.0f, 33.0f, "assets/textures/highscores.png" );
-    Strata::ResourceManager::AddTexture( "Controls", 560.0f, 370.0f, "assets/textures/controls.png" );
-	Strata::ResourceManager::AddTexture( "Paused", 261.0f, 68.0f, "assets/textures/paused.png" );
-    Strata::ResourceManager::AddTexture( "Smoke", 128.0f, 128.0f, "assets/textures/particle.png" );
-    Strata::ResourceManager::AddTexture( "BarBkg", 160.0f, 16.0f, "assets/textures/barbkg.png" );
-    Strata::ResourceManager::AddTexture( "BarBody", 156.0f, 12.0f, "assets/textures/barbody.png" );
-    Strata::ResourceManager::AddTexture( "GameSprites", 1024.0f, 1024.0f, "assets/textures/spritesheet.png", "assets/textures/spritesheet.map" );
+    Strata::ResourceManager::AddTexture( "DevLogo", 512.0f, 96.0f, "romfs:/textures/splash.png", "" );
+    Strata::ResourceManager::AddTexture( "Logo", 400.0f, 200.0f, "romfs:/textures/logo.png" );
+    Strata::ResourceManager::AddTexture( "Fade", 64.0f, 64.0f, "romfs:/textures/black.png" );
+    Strata::ResourceManager::AddTexture( "MenuBkg", 640.0f, 360.0f, "romfs:/textures/menubkg.png" );
+    Strata::ResourceManager::AddTexture( "HSPanel", 922.0f, 489.0f, "romfs:/textures/hspanel.png" );
+    Strata::ResourceManager::AddTexture( "HSCaption", 402.0f, 33.0f, "romfs:/textures/highscores.png" );
+    Strata::ResourceManager::AddTexture( "Controls", 560.0f, 370.0f, "romfs:/textures/controls.png" );
+	Strata::ResourceManager::AddTexture( "Paused", 261.0f, 68.0f, "romfs:/textures/paused.png" );
+    Strata::ResourceManager::AddTexture( "Smoke", 128.0f, 128.0f, "romfs:/textures/particle.png" );
+    Strata::ResourceManager::AddTexture( "BarBkg", 160.0f, 16.0f, "romfs:/textures/barbkg.png" );
+    Strata::ResourceManager::AddTexture( "BarBody", 156.0f, 12.0f, "romfs:/textures/barbody.png" );
+    Strata::ResourceManager::AddTexture( "GameSprites", 1024.0f, 1024.0f, "romfs:/textures/spritesheet.png", "romfs:/textures/spritesheet.map" );
 
     // Initialize our font
-    mFont.LoadFont( "FontTexture", "assets/fonts/segoe_ui.fnt", "assets/fonts/segoe_ui.png");
+    mFont.LoadFont( "FontTexture", "romfs:/fonts/segoe_ui.fnt", "romfs:/fonts/segoe_ui.png");
 
     // Initialize our sound engine
     mAudioEngine.Initialize(32);
 
     // Load our music and sound assets
-    mAudioEngine.LoadMusic( "music", "assets/sounds/bgm.wav" );
-    mAudioEngine.LoadSound( "btn_press", "assets/sounds/button_press.wav" );
-    mAudioEngine.LoadSound( "btn_select", "assets/sounds/button_select.wav" );
-    mAudioEngine.LoadSound( "phaser", "assets/sounds/phaser.wav" );
-    mAudioEngine.LoadSound( "rocket", "assets/sounds/rocket.wav" );
-    mAudioEngine.LoadSound( "shield", "assets/sounds/shield.wav" );
-    mAudioEngine.LoadSound( "explosion_death", "assets/sounds/explosion1.wav" );
-    mAudioEngine.LoadSound( "explosion_hit", "assets/sounds/explosion2.wav" );
-    mAudioEngine.LoadSound( "death", "assets/sounds/death.wav" );
+    mAudioEngine.LoadMusic( "music", "romfs:/sounds/bgm.wav" );
+    mAudioEngine.LoadSound( "btn_press", "romfs:/sounds/button_press.wav" );
+    mAudioEngine.LoadSound( "btn_select", "romfs:/sounds/button_select.wav" );
+    mAudioEngine.LoadSound( "phaser", "romfs:/sounds/phaser.wav" );
+    mAudioEngine.LoadSound( "rocket", "romfs:/sounds/rocket.wav" );
+    mAudioEngine.LoadSound( "shield", "romfs:/sounds/shield.wav" );
+    mAudioEngine.LoadSound( "explosion_death", "romfs:/sounds/explosion1.wav" );
+    mAudioEngine.LoadSound( "explosion_hit", "romfs:/sounds/explosion2.wav" );
+    mAudioEngine.LoadSound( "death", "romfs:/sounds/death.wav" );
 
     // Add all of our game states to our director class
     #ifdef NXDEBUG
